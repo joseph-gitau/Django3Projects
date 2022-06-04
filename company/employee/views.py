@@ -14,6 +14,7 @@ from django.shortcuts import render
 from django.views.generic import View
 # from .forms import  UserCreateForm,UserProfileForm,LoginForm
 from django.shortcuts import render,redirect 
+from django.http.response import HttpResponseRedirect, HttpResponse
 
 import pyautogui as pu
 
@@ -55,7 +56,8 @@ class SignUpView(View):
 
                     if  User.objects.filter(username=username).exists():
                         pu.alert("Username already exists.Registration Failed.Try again.")
-                        return redirect('employees')
+                        return HttpResponseRedirect(reverse_lazy('employee/create'))
+                        # return reverse_lazy('employees-list')
                     else:
                         new_user = User.objects.create_user(username=username, password=password, email=email,
                         first_name=firstname, last_name=lastname)
@@ -72,18 +74,26 @@ class SignUpView(View):
                         p_form.save()
                         pu.alert( text="New User Created Successfully",title="Success")
                         # Create UserProfile model
+                        return HttpResponseRedirect(reverse_lazy('employees-list'))
 
                         
                 else:
                     pu.alert('Registration Failed - Try different email address')
-                    return redirect('employees')
+                    return HttpResponseRedirect(reverse_lazy('employee/create'))
+                # return HttpResponse('Form not valid')
+                    # return reverse_lazy('employees-list')
 
             else:
                 pu.alert("password and confirmpassword does not match.Try again")
-                return redirect('employees')
+                return HttpResponseRedirect(reverse_lazy('employee/create'))
+        
+        # return HttpResponse('Form not valid')
 
         else:
-            return render(request, self.template_name, {'form': form})   
+            pu.alert("Something went wrong.Try again")
+            return HttpResponse('Form not valid')
+            # return HttpResponseRedirect(reverse_lazy('employee/create')) 
+    # return HttpResponseRedirect(reverse_lazy('employees-list')) 
 
 # Only logged in superuser can see this view
 class EmployeeCreateViewOld(LoginRequiredMixin,UserPassesTestMixin,CreateView):
