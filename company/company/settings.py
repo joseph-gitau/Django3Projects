@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,8 @@ SECRET_KEY = 'a+_30ptz*jo3#2yjdf%6a8vz$e+4o&d&7gj-t@%a+w+odho9c^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOST = ['hospitalv6.herokuapp.com']
 
 
 # Application definition
@@ -78,10 +80,10 @@ WSGI_APPLICATION = 'company.wsgi.application'
 
 DATABASES = {'default': {
 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': 'company', #use your database name here at the time of creation
-'USER': 'postgres', #use your database username here at the time of creation
-'PASSWORD': 'burt', #use your database password here at the time of creation
-'HOST': 'localhost',
+'NAME': 'd5vfj3ko8f1so1', #use your database name here at the time of creation
+'USER': 'qvclzqsvcrtfpt', #use your database username here at the time of creation
+'PASSWORD': '2bdfd7178df2295c29f93f0fd8d46a401d7551cdc9abcfaf858cfcbf65c7ec67', #use your database password here at the time of creation
+'HOST': 'ec2-34-198-186-145.compute-1.amazonaws.com',
 'PORT': '5432',
 }
 }
@@ -131,6 +133,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static'),]
 STATIC_ROOT =os.path.join(BASE_DIR,'assets')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+django_heroku.settings(locals())
 
 
 
